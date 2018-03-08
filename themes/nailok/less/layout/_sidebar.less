@@ -1,0 +1,167 @@
+.sidebar {
+  .search {
+    .input {
+      position: relative;
+      width: 240px;
+    }
+    button {
+      position: absolute;
+      top: 0px;
+      right: 5px;
+      border: none;
+      background: transparent;
+      font-size: 24px;
+      font-weight: 400;
+      color: @gray;
+      transform: scaleX(-1);
+      cursor: pointer;
+      outline: none;
+    }
+    input {
+      .size(100%, 36px);
+      background-color: white;
+      border: 1px solid rgba(89, 89, 91, 0.1);
+      .border-radius(18px);
+      text-indent: 10px;
+    }
+  }
+  .menu-select {
+    font-weight: 700;
+    padding: 10px 0 20px 15px;
+    .group {
+      font-size: 18px;
+      border-bottom: 2px dashed @gray;
+      color: @gray;
+    }
+    i {
+      font-size: 50px;
+      color: @gray;
+      font-weight: 200;
+      position: relative;
+      top: 15px;
+      left: -7px;
+    }
+    .brand {
+      font-size: 18px;
+      border-bottom: 2px dashed @gray;
+      color: @gray;
+      position: relative;
+      top: 10px;
+      left: -10px;
+    }
+    a:hover {
+      color: @purple;
+    }
+    .active {
+      font-size: 24px;
+      color: @purple;
+      border-bottom: none;
+    }
+  }
+  .menu {
+    display: none;
+    &.active {
+      display: block;
+    }
+    & > li {
+      color: @gray;
+      font-size: 13px;
+      font-weight: 500;
+      height: 32px;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      transition: all .2s;
+      .border-radius(32px);
+      position: relative;
+      &:hover, &.active, &.show {
+        background-color: @pink;
+        color: white;
+        a {
+          color: white;
+        }
+      }
+      & > i, & > a {
+        z-index: 101;
+        position: relative;
+      }
+    }
+    .dropdown-menu {
+      border: none;
+      padding: 15px 25px 15px 20px;
+      .border-radius(16px);
+      background-color: @pink;
+      left: 300px;
+      position: absolute;
+      .fit-content();
+      top: -2px;
+      bottom: auto;
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: none;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100px;
+        width: 250px;
+        height: 32px;
+        background-color: @pink;
+      }
+      & > li {
+        position: relative;
+        margin-bottom: 10px;
+        z-index: 1;
+      }
+      .sub-menu {
+        font-weight: 400;
+        padding-left: 20px;
+        li {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+  .side-advantages {
+    padding-top: 100px;
+    .advantage-item {
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .sidebar {
+    padding-bottom: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    max-width: 320px;
+    margin: 0 auto;
+    text-align: center;
+    .menu {
+      .show {
+        height: auto;
+        display: inline-block;
+      }
+      .dropdown-menu {
+        position: unset;
+        top: auto;
+        left: auto;
+        &:before {
+          display: none;
+        }
+      }
+    }
+    .search {
+      display: none;
+    }
+    .side-advantages{
+      display: none;
+    }
+  }
+}

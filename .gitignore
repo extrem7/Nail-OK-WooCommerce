@@ -1,0 +1,14 @@
+.idea/
+node_modules/
+languages/
+upgrade/
+uploads/
+index.php
+plugins/advanced-custom-fields/
+plugins/contact-form-7/
+plugins/duplicate-post/
+plugins/flamingo/
+plugins/perfect-woocommerce-brands/
+plugins/woocommerce/
+plugins/ti-woocommerce-wishlist/*
+!plugins/ti-woocommerce-wishlist/templates

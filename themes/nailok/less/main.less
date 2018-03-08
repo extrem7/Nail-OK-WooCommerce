@@ -1,0 +1,97 @@
+@import "../css/bootstrap.min.css";
+@import url("https://use.fontawesome.com/releases/v5.0.6/css/all.css");
+@import "helpers/_reset";
+@import "helpers/_fonts";
+@import "helpers/_lesshat";
+@import "helpers/_utils";
+@import "helpers/_base";
+@import "layout/_header";
+@import "layout/_sidebar";
+@import "layout/_footer";
+@import "layout/_modal";
+@import "layout/_product";
+@import "layout/_course";
+@import "pages/_index";
+@import "pages/_catalog";
+@import "pages/_product";
+@import "pages/_course";
+@import "pages/_cart";
+@import "pages/_contacts";
+@import "pages/_promotion";
+@import "pages/_news";
+@import "pages/_404";
+@import "pages/_search";
+
+.favorite-page, .coaches-page, .custom-page {
+  h1.title-big {
+    padding-top: 45px;
+  }
+}
+.custom-page{
+  main{
+    padding-bottom: 45px;
+  }
+}
+.seo-text {
+  padding: 130px 0 100px;
+  color: #959595;
+  font-size: 14px;
+}
+
+.woocommerce-message,
+.woocommerce-error,
+.woocommerce-info {
+  padding: 1em 2em 1em 2em;
+  margin: 0 0 2em;
+  position: relative;
+  background-color: #f7f6f7;
+  color: #515151;
+  border-top: 3px solid @purple;
+  list-style: none outside;
+  width: auto;
+  word-wrap: break-word;
+
+  a {
+    float: right;
+    .btn-pink();
+  }
+
+  li {
+    list-style: none outside !important; // Required for default theme compatibility
+    padding-left: 0 !important; // Required for default theme compatibility
+    margin-left: 0 !important; // Required for default theme compatibility
+  }
+}
+
+.tinv-modal-inner {
+  i, svg {
+    color: white;
+  }
+  button {
+    .btn-pink();
+    transition: all .2s;
+  }
+}
+
+.wc-backward {
+  .btn-pink();
+  margin: 15px auto;
+}
+
+@media (max-width: 768px) {
+  .seo-text {
+    display: none;
+  }
+
+  .woocommerce-message,
+  .woocommerce-error,
+  .woocommerce-info {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    a {
+      margin-top: 15px;
+    }
+  }
+}

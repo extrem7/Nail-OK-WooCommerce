@@ -1,0 +1,242 @@
+.course-item {
+  height: 390px;
+  width: ~'calc(50% - 6px)';
+  padding: 20px 15px 0;
+  margin: 6px 0;
+  background: url("") no-repeat center;
+  background-size: cover;
+  &.course-big {
+    margin: 0 0 6px;
+    width: 100%;
+  }
+  .date {
+    padding: 5px 10px;
+    background-color: @purple;
+    .border-radius(32px);
+    .fit-content();
+    color: white;
+    font-size: 10px;
+    font-weight: 500;
+    margin-bottom: 35px;
+  }
+  .title-big {
+    font-size: 30px;
+    line-height: 30px;
+    height: 120px;
+    margin-bottom: 35px;
+    display: block;
+  }
+  mark {
+    background: transparent;
+  }
+  .info {
+    font-size: 14px;
+    margin-bottom: 40px;
+    svg, i {
+      margin-right: 10px;
+    }
+  }
+  .control {
+    display: flex;
+    align-items: center;
+    .btn-pink {
+      padding: 6px 23px;
+      margin-right: 18px;
+    }
+    .more {
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: underline;
+    }
+  }
+}
+
+.coach-item {
+  width: ~'calc(33.333% - 16px)';
+  margin-bottom: 75px;
+  position: relative;
+  .about {
+    padding: 0 15px 0 10px;
+  }
+  .photo {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  .title-big {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 62px;
+  }
+  .btn-pink {
+    padding: 6px 22px;
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.banner-long {
+  display: block;
+  width: 90%;
+  margin: 90px 0 40px auto;
+  .border-pink();
+  position: relative;
+  padding: 34.1px 0 33px;
+  .title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+    position: relative;
+    left: -10%;
+    span {
+      color: @purple;
+      font-size: 48px;
+      position: relative;
+      top: 8px;
+    }
+  }
+  img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.banner-address {
+  margin: 40px 0;
+  width: 100%;
+  position: relative;
+  .info {
+    position: absolute;
+    left: -5px;
+    top: 30px;
+  }
+  p {
+    margin-top: 15px;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 30px;
+  }
+  .map {
+    width: 90%;
+    height: 360px;
+    margin-left: auto;
+    display: block;
+  }
+}
+
+.school-page {
+  .before-content {
+    margin-bottom: 45px;
+  }
+}
+
+@media (min-width: 991px) and (max-width: 1200px) {
+  .course-item:not(.course-big) {
+    .title-big {
+      font-size: 25px;
+    }
+  }
+
+  .coach-item {
+    .about {
+      padding: 0;
+    }
+  }
+
+  .banner-long {
+    padding-bottom: 200px;
+    .title {
+      text-align: center;
+      left: 0;
+    }
+    br {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .banner-long {
+    .title {
+      padding-right: 100px;
+      br {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 578px) and (max-width: 768px) {
+  .course-item:not(.course-big) {
+    .title-big {
+      font-size: 20px;
+      line-height: normal;
+      br {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-long {
+    width: 100%;
+    padding-bottom: 200px;
+    .title {
+      text-align: center;
+      padding: 0;
+      left: 0;
+    }
+    br {
+      display: none;
+    }
+  }
+
+  .course-item {
+    .title-big {
+      color: black;
+    }
+  }
+
+  .coach-item {
+    width: ~'calc(50% - 8px)';
+  }
+
+  .banner-address {
+    margin-bottom: 0;
+    .map {
+      width: 100%;
+      margin-top: 15px;
+    }
+    .info {
+      position: relative;
+      top: auto;
+    }
+    .title-big {
+      font-size: 28px;
+      br {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 578px) {
+  .course-item {
+    width: 100%;
+  }
+
+  .coach-item {
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto 25px;
+    .btn-pink {
+      .absolute-center();
+    }
+  }
+}

@@ -1,0 +1,398 @@
+.home-page {
+  .main-wrap {
+    background: url("../img/products-background.png") no-repeat center;
+    background-position-y: 1420px;
+  }
+  .banner {
+    margin-bottom: 60px;
+    .carousel-item {
+      height: 400px;
+      background: url("") no-repeat center;
+      background-size: cover;
+    }
+    .wrap {
+      padding: 130px 0 0 60px;
+    }
+    .text {
+      color: @gray;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .sale {
+      color: white;
+      font-size: 24px;
+      font-weight: 700;
+      background-color: #bd6aac;
+      padding: 6px 12px;
+      transition: background .3s;
+      &:hover {
+        background-color: @purple;
+      }
+    }
+    .carousel-indicators {
+      li {
+        .size(15px);
+        max-width: 15px;
+        background-color: white;
+        .border-radius(50%);
+        margin: 0 3px;
+        padding: 0;
+        transition: all .2s;
+        &.active {
+          background-color: @purple;
+        }
+      }
+    }
+  }
+  .starter-pack {
+    padding: 60px 0;
+    .left {
+      max-width: 240px;
+      padding-top: 70px;
+      .title-big {
+        width: 290px;
+        position: relative;
+        z-index: 2;
+      }
+      .text {
+        font-size: 14px;
+        font-weight: 300;
+        color: @gray;
+      }
+      .btn-pink {
+        .fit-content();
+        margin-top: 25px;
+        font-size: 12px;
+        padding-top: 4px;
+        position: relative;
+      }
+    }
+    .carousel {
+      .size(640px, 340px);
+      .border-pink();
+      .add-favorite {
+        .border-radius(50%);
+        background-clip: padding-box;
+        padding: 0;
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        span {
+          display: none;
+        }
+      }
+      .car-cont {
+        bottom: 23%;
+        top: auto;
+        .size(40px);
+        background-color: white;
+        .box-shadow(0 3px 9px rgba(0, 0, 0, 0.06));
+        opacity: 1;
+        .border-radius(50%);
+        font-size: 24px;
+        color: @gray;
+        transition: all .2s;
+        z-index: 2;
+        &:hover {
+          background-color: @pink;
+          color: white;
+        }
+        &.carousel-control-prev {
+          left: -10px;
+        }
+        &.carousel-control-next {
+          right: -30px;
+        }
+      }
+      &-inner {
+        overflow: visible;
+      }
+      &-item {
+        .size(684px, 384px);
+        display: block;
+        opacity: 0;
+        position: absolute;
+        transition: opacity .6s ease-in-out;
+        top: -35px !important;
+        left: 9px !important;
+        transform: none !important;
+        background: url("") no-repeat center;
+        background-size: 100%;
+        &.active {
+          opacity: 1;
+          z-index: 1;
+        }
+      }
+      .title {
+        font-size: 24px;
+        font-weight: 700;
+        color: @gray;
+        max-width: 280px;
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        mark {
+          background-color: rgba(255, 255, 255, 0.8);
+          color: @gray;
+        }
+      }
+      .buy {
+        display: flex;
+        position: absolute;
+        top: 25px;
+        right: 40px;
+        a {
+          margin-left: 10px;
+        }
+      }
+      .bottom {
+        position: absolute;
+        bottom: 35px;
+        right: 20px;
+        display: flex;
+        align-items: flex-end;
+        .price {
+          color: white;
+          font-size: 30px;
+          line-height: 26px;
+          text-transform: uppercase;
+          font-weight: 500;
+          background-color: #bd6aac;
+          padding: 6px 12px;
+          transition: background .3s;
+          &:hover {
+            background-color: @purple;
+          }
+        }
+        .num {
+          width: 120px;
+          color: @gray;
+          margin: 0 0 -10px 10px;
+          font-weight: 700;
+
+          .big {
+            font-size: 60px;
+          }
+          i {
+            font-size: 60px;
+            color: @gray;
+            font-weight: 200;
+            position: relative;
+            top: 10px;
+            left: -7px;
+          }
+          .min {
+            font-size: 46px;
+            position: relative;
+            top: 10px;
+            left: -10px;
+          }
+        }
+      }
+    }
+
+  }
+  .advantages {
+    padding: 60px 0;
+    .delivery {
+      margin-left: 80px;
+    }
+  }
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 50px 0 45px;
+    .hot {
+      .btn-pink {
+        margin-top: 25px;
+      }
+    }
+    & > div {
+      margin: 5px 0.6%;
+      width: 32%;
+    }
+  }
+  .benefits {
+    padding: 45px 0 100px;
+    .item {
+      height: 368px;
+      background: url('../img/blank.png') no-repeat center;
+      background-size: 100% 100%;
+      transition: all .5s;
+      padding: 50px 20px 0;
+      text-align: center;
+      svg {
+        font-size: 50px;
+        color: @purple;
+        margin: 0 auto 5px;
+      }
+      .title-big {
+        font-size: 30px;
+        line-height: normal;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+      &:hover, &.active {
+        background-image: url("../img/benefit-border.png");
+      }
+    }
+    hr {
+      margin: 90px 0 40px;
+      border-color: #f3f4f6;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .home-page {
+    .main-wrap {
+      background-position-y: 1875px;
+    }
+    .starter-pack {
+      // overflow: hidden;
+      flex-direction: column;
+      padding: 25px 0 25px;
+      .left {
+        padding: 0 0 35px;
+      }
+      .carousel {
+        width: 100%;
+      }
+      .carousel-item {
+        width: 100%;
+      }
+      .carousel-control-next {
+        right: 0 !important;
+      }
+    }
+    .advantages {
+      flex-direction: column;
+      align-items: center;
+      .advantage-item {
+        margin: 0 0 15px;
+      }
+    }
+    .products {
+      & > div {
+        width: 48%;
+      }
+    }
+    .benefits {
+      padding: 35px 0 55px;
+      hr {
+        margin: 25px 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .home-page {
+    .products {
+      & > div {
+        width: 32%;
+      }
+    }
+    .benefits {
+      .item {
+        //.size(auto);
+        height: 300px;
+        .title-big {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    .main-wrap {
+      background: none;
+    }
+    .banner {
+      margin: 0 -15px 45px;
+      .wrap {
+        padding: 130px 15px 0;
+        text-align: center;
+        width: 100%;
+      }
+      .title-big {
+        font-size: 34px;
+        line-height: normal;
+      }
+      .text {
+        font-size: 18px;
+      }
+    }
+    .starter-pack {
+      overflow: hidden;
+      .left {
+        padding-left: 45px;
+        br {
+          display: none;
+        }
+      }
+      .carousel {
+        border: none;
+        max-height: 384px;
+        height: 70vw;
+      }
+      .carousel-item {
+        max-height: 384px;
+        height: 70vw;
+        left: auto !important;
+        top: auto !important;
+      }
+      .title {
+        max-width: 100%;
+        font-size: 24px;
+      }
+      .car-cont {
+        display: none;
+      }
+      .buy {
+        top: auto !important;
+        .absolute-center();
+        .fit-content();
+        right: 0 !important;
+        bottom: -15px;
+      }
+      .price {
+        padding: 15px 5px !important;
+      }
+    }
+    .advantages {
+      align-items: flex-end;
+    }
+    .products {
+      & > div {
+        width: 100%;
+        max-width: 290px;
+        margin: 0 auto;
+        &:nth-child(n+5) {
+          display: none;
+        }
+      }
+      .hot {
+        padding-bottom: 15px;
+        .title-big {
+          font-size: 36px;
+          line-height: normal;
+        }
+      }
+    }
+    .benefits {
+      .item {
+        height: auto;
+        padding-bottom: 35px;
+        max-width: 320px;
+        margin: 15px auto;
+      }
+    }
+  }
+}

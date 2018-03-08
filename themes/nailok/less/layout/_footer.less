@@ -1,0 +1,136 @@
+.footer {
+  background-color: #2d2d2e;
+  padding: 45px 0 25px;
+  color: white;
+  .logo {
+    margin-bottom: 25px;
+    display: block;
+    img {
+      max-width: 100%;
+    }
+  }
+  .social {
+    a {
+      margin-right: 15px;
+      font-size: 24px;
+      color: white;
+      &:hover {
+        color: @purple;
+      }
+    }
+  }
+  .menu {
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    text-decoration: underline;
+    li {
+      margin-bottom: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &:hover {
+        color: @purple;
+      }
+    }
+  }
+  .title {
+    font-size: 14px;
+    color: white;
+    font-weight: 700;
+    margin-left: -20px;
+  }
+  .phones {
+    width: 230px;
+    li {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      font-size: 14px;
+      a {
+        font-weight: 400;
+      }
+      &:hover a {
+        color: @purple;
+      }
+    }
+  }
+  .location {
+    font-size: 14px;
+  }
+  .fa-phone {
+    transform: rotate(90deg);
+    margin-right: 5px;
+  }
+  .fa-map-marker-alt {
+    margin-right: 8px;
+  }
+  .bottom {
+    margin-top: 60px;
+    font-size: 12px;
+    font-weight: 500;
+    span {
+      font-family: FontAwesome;
+    }
+    a:hover {
+      color: @purple;
+      text-decoration: underline;
+    }
+  }
+  .copyright {
+    padding-right: 15px;
+  }
+  .design {
+    text-decoration: underline;
+  }
+  .studio {
+    text-decoration: underline;
+  }
+}
+
+.scroll-up {
+  border-radius: 50%;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 30px;
+  background: white;
+  color: @purple !important;
+  position: fixed;
+  right: 3%;
+  .size(64px);
+  bottom: 50px;
+  display: none;
+  cursor: pointer;
+  z-index: 2;
+  transition: all .2s !important;
+  &:hover {
+    i, svg {
+      color: white;
+    }
+    background-color: @purple;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    .row {
+      & > div {
+        .fit-content();
+      }
+    }
+    .social {
+      a:last-child {
+        margin: 0;
+      }
+      svg {
+        font-size: 48px;
+      }
+    }
+    .menu {
+      font-size: 24px;
+    }
+    .bottom {
+      font-size: 24px;
+    }
+  }
+}

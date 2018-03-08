@@ -1,0 +1,54 @@
+.promotion-page {
+  .before-content {
+    margin-bottom: 30px;
+  }
+  .promotion-item {
+    height: 290px;
+    padding: 20px 15px 0;
+    margin-bottom: 10px;
+    background: url("") no-repeat center;
+    background-size: cover;
+    &.course-big {
+      margin: 0 0 6px;
+      width: 100%;
+    }
+    .date {
+      padding: 5px 10px;
+      background-color: @purple;
+      .border-radius(32px);
+      .fit-content();
+      color: white;
+      font-size: 10px;
+      font-weight: 500;
+      margin-bottom: 35px;
+    }
+    .title-big {
+      font-size: 30px;
+      line-height: 30px;
+      //height: 87px;
+      margin-bottom: 35px;
+      display: block;
+    }
+    .btn-pink {
+      padding: 6px 20px;
+      transition: all .2s;
+    }
+  }
+  .item-content {
+    display: none;
+    margin-bottom: 15px;
+    padding-left: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .promotion-page {
+    .promotion-item {
+      height: auto;
+      padding-bottom: 10px;
+      .title-big {
+        background: fade(white, 60%);
+      }
+    }
+  }
+}
