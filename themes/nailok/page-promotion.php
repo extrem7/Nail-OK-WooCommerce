@@ -15,23 +15,25 @@ get_header(); ?>
 	<? while ( have_rows( 'список' ) ) :
 		the_row() ?>
         <div class="promotion-item" style="background-image: url('<? the_sub_field( 'изображение' ) ?>')">
-            <p class="date"><? the_sub_field( 'дата' ) ?></p>
+			<? if ( get_sub_field( 'дата' ) ): ?>
+                <p class="date"><? the_sub_field( 'дата' ) ?></p>
+			<? endif; ?>
             <p href="" class="title-big"><? the_sub_field( 'название' ) ?></p>
 			<? if ( get_sub_field( 'текст' ) ): ?>
                 <a href="" class="add-to-cart btn-pink light">Подробнее</a>
 			<? endif; ?>
         </div>
 		<? if ( get_sub_field( 'текст' ) ): ?>
-        <div class="item-content"><? the_sub_field( 'текст' ) ?></div>
+        <div class="item-content formated-text"><? the_sub_field( 'текст' ) ?></div>
 	<? endif; ?>
 	<? endwhile; ?>
-    <div class="row">
-        <div class="col-12">
-			<? get_template_part( 'template-parts/banner-certificate' ) ?>
+	<?= apply_filters( 'the_content', wpautop( get_post_field( 'post_content', $id ), true ) ); ?>
+	<? if ( get_field( 'Сео-контент' ) ): ?>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<? the_field( 'Сео-контент' ) ?>
         </div>
-    </div>
-	<? get_template_part( 'template-parts/banner-address' ) ?>
-	<? get_template_part( 'template-parts/banner-course' ) ?>
+	<? endif; ?>
 </main>
 
 <?php get_footer(); ?>

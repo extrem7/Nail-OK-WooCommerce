@@ -14,18 +14,24 @@ get_header(); ?>
     <h1 class="title-big"><? the_title() ?></h1>
     <div class="d-flex justify-content-around flex-wrap">
 		<?
-		while ( have_rows( 'список' ) ) : the_row() ?>
+        $coaches = get_field('список');
+		foreach ($coaches as $coach) :?>
             <div class="coach-item">
-                <img <? repeater_image('фото') ?> class="photo">
+                <img <? the_image('инструктор',$coach) ?> class="photo">
                 <div class="about">
-                    <h4 class="title-big"><? the_sub_field('имя') ?></h4>
-                    <p><? the_sub_field("описание") ?></p>
+                    <? the_field("краткое-описание",$coach) ?>
                     <!--<a href="" class="add-to-cart btn-pink light">Курсы Дарьи</a>-->
                 </div>
             </div>
-		<? endwhile; ?>
+		<? endforeach; ?>
     </div>
-	<? get_template_part( 'template-parts/banner-course' ) ?>
+	<?= apply_filters( 'the_content', wpautop( get_post_field( 'post_content', $id ), true ) ); ?>
+	<? if ( get_field( 'Сео-контент' ) ): ?>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<? the_field( 'Сео-контент' ) ?>
+        </div>
+	<? endif; ?>
 </main>
 
 <?php get_footer(); ?>

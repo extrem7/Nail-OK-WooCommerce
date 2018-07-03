@@ -32,6 +32,9 @@ if ( is_404() ) {
 	if ( get_post_type() == 'school' ) {
 		$bodyClass .= " course-page ";
 	}
+	if(get_page_template_slug() == 'woocommerce/hot-products.php'){
+		$bodyClass .= " catalog-page ";
+    }
 	switch ( get_page_template_slug() ) {
 		case 'page-coaches.php':
 			$bodyClass = "coaches-page";
@@ -76,7 +79,7 @@ if ( is_404() ) {
                 <a href="tel:<?= preg_replace( '/[^0-9]/', '', get_field( 'хедер-телефон', 'option' ) ); ?>"
                    class="btn-pink round phone"><i class="fas fa-phone"></i></a>
 			<? endif; ?>
-            <a href="/cart" class="cart"><i class="fas fa-shopping-cart"></i></a>
+            <a href="/cart" class="cart" onclick="yaCounter48380480.reachGoal('korzina'); return true;"><i class="fas fa-shopping-cart"></i></a>
             <button type="button" class="toggle-btn">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -111,7 +114,7 @@ if ( is_404() ) {
 							'menu_class' => 'dropdown-menu',
 							'container'  => null
 						];
-						wp_nav_menu( $menu_args )
+						//wp_nav_menu( $menu_args )
 						?>
                     </div>-->
 					<?
@@ -119,11 +122,11 @@ if ( is_404() ) {
 					$count   = $counter->counter();
 					if ( $count ):?>
                         <div class="wishlist">
-                            <a href="/wishlist"><i class="fas fa-heart"></i>Закладки (<?= $count ?>)</a>
+                            <a href="/wishlist"><i class="fas fa-heart"></i>Избранное (<?= $count ?>)</a>
                         </div>
 					<? endif; ?>
                     <div class="cart">
-                        <a href="/cart"><i class="fas fa-shopping-cart"></i>
+                        <a href="/cart" onclick="yaCounter48380480.reachGoal('korzina'); return true;"><i class="fas fa-shopping-cart"></i>
 							<? if ( ! empty( WC()->cart->get_cart() ) ): ?>
                                 <span class="cart-counter"><? echo WC()->cart->get_cart_contents_count() ?></span>
 							<? endif; ?>
@@ -132,11 +135,11 @@ if ( is_404() ) {
                 </div>
                 <div class="right d-flex">
 					<? if ( get_field( 'хедер-вк', 'option' ) ): ?>
-                        <a href="<? the_field( 'хедер-вк', 'option' ) ?>" class="btn-pink round"><i
+                        <a target="_blank" href="<? the_field( 'хедер-вк', 'option' ) ?>" class="btn-pink round"><i
                                     class="fab fa-vk"></i></a>
 					<? endif; ?>
 					<? if ( get_field( 'хедер-инстаграм', 'option' ) ): ?>
-                        <a href="<? the_field( 'хедер-инстаграм', 'option' ) ?>" class="btn-pink round"><i
+                        <a target="_blank" href="<? the_field( 'хедер-инстаграм', 'option' ) ?>" class="btn-pink round"><i
                                     class="fab fa-instagram"></i></a>
 					<? endif; ?>
 					<? if ( get_field( 'хедер-телефон', 'option' ) ): ?>

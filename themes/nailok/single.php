@@ -15,7 +15,7 @@ if ( $postcat[0]->term_id == 21 ): ?>
             </div>
         </div>
         <h1 class="title-big"><? the_title() ?></h1>
-        <? the_field('контент',false,true) ?>
+        <div class="formated-text"> <? the_field('контент',false,true) ?></div>
     </main>
 <? endif; ?>
 <?php get_footer(); ?>

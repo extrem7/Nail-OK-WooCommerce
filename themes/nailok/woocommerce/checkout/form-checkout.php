@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-wc_print_notices();
+//wc_print_notices();
 
 //do_action( 'woocommerce_before_checkout_form', $checkout );
 
@@ -28,7 +28,8 @@ wc_print_notices();
 <section class="checkout-section">
     <h4 class="title-big">Оформление заказа</h4>
     <form name="checkout" method="post" class="checkout woocommerce-checkout"
-          action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+          action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data"
+          onsubmit="yaCounter48380480.reachGoal('zakaz'); return true;">
 
 		<?php if ( $checkout->get_checkout_fields() ) : ?>
 			<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
@@ -43,7 +44,7 @@ wc_print_notices();
         </div>
 		<?php do_action( 'woocommerce_checkout_after_order_review' ); ?>
         <div class="order">
-            <p><? the_field('передзвоним') ?></p>
+            <p><? the_field( 'передзвоним' ) ?></p>
 			<?php echo apply_filters( 'woocommerce_order_button_html', '<input type="submit" class="button add-to-cart btn-pink alt" name="woocommerce_checkout_place_order" id="place_order" value="Оформить заказ" data-value="' . esc_attr( $order_button_text ) . '" />' ); ?>
         </div>
     </form>

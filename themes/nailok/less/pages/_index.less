@@ -1,4 +1,7 @@
 .home-page {
+  .content{
+    padding-bottom: 0;
+  }
   .main-wrap {
     background: url("../img/products-background.png") no-repeat center;
     background-position-y: 1420px;
@@ -11,7 +14,7 @@
       background-size: cover;
     }
     .wrap {
-      padding: 130px 0 0 60px;
+      margin: 130px 0 0 60px;
     }
     .text {
       color: @gray;
@@ -112,16 +115,16 @@
         overflow: visible;
       }
       &-item {
-        .size(684px, 384px);
+        .size(620px, 340px);
         display: block;
         opacity: 0;
         position: absolute;
         transition: opacity .6s ease-in-out;
-        top: -35px !important;
+        top: -15px !important;
         left: 9px !important;
         transform: none !important;
         background: url("") no-repeat center;
-        background-size: 100%;
+        background-size: 100% 100%;
         &.active {
           opacity: 1;
           z-index: 1;
@@ -137,6 +140,7 @@
         left: 35px;
         mark {
           background-color: rgba(255, 255, 255, 0.8);
+          line-height: 40px;
           color: @gray;
         }
       }
@@ -217,7 +221,7 @@
     }
   }
   .benefits {
-    padding: 45px 0 100px;
+    padding: 45px 0 0px;
     .item {
       height: 368px;
       background: url('../img/blank.png') no-repeat center;
@@ -236,13 +240,9 @@
         margin-bottom: 15px;
         font-weight: 700;
       }
-      &:hover, &.active {
+      &:hover {
         background-image: url("../img/benefit-border.png");
       }
-    }
-    hr {
-      margin: 90px 0 40px;
-      border-color: #f3f4f6;
     }
   }
 }
@@ -317,7 +317,7 @@
     .banner {
       margin: 0 -15px 45px;
       .wrap {
-        padding: 130px 15px 0;
+        margin: 130px 15px 0;
         text-align: center;
         width: 100%;
       }
@@ -340,11 +340,11 @@
       .carousel {
         border: none;
         max-height: 384px;
-        height: 70vw;
+        height: 62vw;
       }
       .carousel-item {
         max-height: 384px;
-        height: 70vw;
+        height: 62vw;
         left: auto !important;
         top: auto !important;
       }

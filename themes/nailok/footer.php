@@ -7,11 +7,15 @@
             <div class="col-xl-3 col-lg-2 d-block d-md-none d-lg-block">
                 <a href="" class="logo d-none d-md-block"><img <? the_image( 'футер-лого', 'option' ) ?>></a>
                 <div class="social d-flex">
-					<? if ( get_field( 'хедер-вк', 'option' ) ): ?>
-                        <a href="<? the_field( 'хедер-вк', 'option' ) ?>"><i class="fab fa-vk"></i></a>
+					<?
+					$vk = get_field( 'хедер-вк', 'option' );
+					if ( $vk ): ?>
+                        <a target="_blank" href="<?= $vk ?>"><i class="fab fa-vk"></i></a>
 					<? endif; ?>
-					<? if ( get_field( 'хедер-инстаграм', 'option' ) ): ?>
-                        <a href="<? the_field( 'хедер-инстаграм', 'option' ) ?>"><i class="fab fa-instagram"></i></a>
+					<?
+					$in = get_field( 'хедер-инстаграм', 'option' );
+					if ( $in ): ?>
+                        <a target="_blank" href="<?= $in ?>"><i class="fab fa-instagram"></i></a>
 					<? endif; ?>
                 </div>
             </div>
@@ -43,7 +47,9 @@
                 </div>
             </div>
         </div>
-        <div class="bottom d-flex flex-column flex-md-row justify-content-center"><? the_field( 'футер-копирайт', 'option' ) ?></div>
+        <div class="bottom d-flex flex-column flex-md-row justify-content-center"><? the_field( 'футер-копирайт', 'option' ) ?>
+            <a href="<? the_field( 'политика-файл', 'option' ) ?>" target="_blank" class="studio">Политика
+                конфиденциальности</a></p></div>
     </div>
 </footer>
 <a href="" class="scroll-up"><i class="fa fa-angle-double-up"></i></a>
@@ -86,6 +92,8 @@
     </div>
 </div>
 <? wp_footer() ?>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" media="none" onload="if(media!='all')media='all'">
+<noscript><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css"></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
         integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
         crossorigin="anonymous"></script>
@@ -96,5 +104,43 @@
 <? if ( is_front_page() ): ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
 <? endif; ?>
+<!--METRIK-->
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function () {
+            try {
+                w.yaCounter48380480 = new Ya.Metrika({
+                    id: 48380480,
+                    clickmap: true,
+                    trackLinks: true,
+                    accurateTrackBounce: true,
+                    webvisor: true
+                });
+            } catch (e) {
+            }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () {
+                n.parentNode.insertBefore(s, n);
+            };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else {
+            f();
+        }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript>
+    <div><img src="https://mc.yandex.ru/watch/48380480" style="position:absolute; left:-9999px;" alt=""/></div>
+</noscript>
+<!-- /Yandex.Metrika counter -->
+<!--METRIK-->
 </body>
 </html>

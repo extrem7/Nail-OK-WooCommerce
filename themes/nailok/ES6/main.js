@@ -81,9 +81,11 @@ const header = {
             jQuery('#delivery').change(() => {
                 if (!this.status) {
                     jQuery('#billing_company').removeAttr('disabled');
+                    jQuery('.address-details input').removeAttr('disabled', 'disabled');
                     this.status = true;
                 } else {
                     jQuery('#billing_company').attr('disabled', 'disabled');
+                    jQuery('.address-details input').attr('disabled', 'disabled');
                 }
             });
         }

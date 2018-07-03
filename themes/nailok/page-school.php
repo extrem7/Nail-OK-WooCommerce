@@ -11,7 +11,7 @@ get_header(); ?>
 			} ?>
         </div>
     </div>
-    <h1 class="title-big"><? the_title() ?></h1>
+    <h1 class="title-big" style="text-align: left;" align="center"><? the_title() ?></h1>
     <div class="d-flex justify-content-between flex-wrap">
 		<?
 		$status = true;
@@ -23,27 +23,37 @@ get_header(); ?>
 			     } else {
 				     echo get_the_post_thumbnail_url( $_post );
 			     } ?>')">
-                <p class="date"><? the_field( 'дата', $_post ) ?></p>
+				<? if ( get_field( 'дата', $_post ) ): ?>
+                    <p class="date"><? the_field( 'дата', $_post ) ?></p>
+				<? endif; ?>
                 <a href="<?= get_permalink( $_post ) ?>"
                    class="title-big"><? the_field( 'название-короткое', $_post ); ?></a>
                 <div class="info">
-                    <i class="far fa-clock"></i> <? the_field( 'длительность', $_post ) ?>
-                    <br>
-                    <i class="far fa-credit-card"></i> <? the_field( 'стоимость', $_post ) ?>
+					<? if ( get_field( 'длительность', $_post ) ): ?>
+                        <i class="far fa-clock"></i> <? the_field( 'длительность', $_post ) ?>
+                        <br>
+					<? endif; ?>
+					<? if ( get_field( 'стоимость', $_post ) ): ?>
+                        <i class="far fa-credit-card"></i> <? the_field( 'стоимость', $_post ) ?>
+					<? endif; ?>
                 </div>
                 <div class="control">
                     <a href="" data-toggle="modal" data-target="#course"
-                       class="add-to-cart btn-pink light">Записаться</a>
+                       class="add-to-cart btn-pink light" onclick="yaCounter48380480.reachGoal('zapis'); return true;">Записаться</a>
                     <a href="<?= get_permalink( $_post ) ?>" class="more">Подробнее</a>
                 </div>
             </div>
 			<?
 			$status = false;
 		endwhile; ?>
-		<? get_template_part( 'template-parts/banner-certificate' ) ?>
-	    <? get_template_part( 'template-parts/banner-address' ) ?>
-	    <? get_template_part( 'template-parts/banner-course' ) ?>
     </div>
+	<?= apply_filters( 'the_content', wpautop( get_post_field( 'post_content', $id ), true ) ); ?>
+	<? if ( get_field( 'Сео-контент' ) ): ?>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<? the_field( 'Сео-контент' ) ?>
+        </div>
+	<? endif; ?>
 </main>
 
 <?php get_footer(); ?>

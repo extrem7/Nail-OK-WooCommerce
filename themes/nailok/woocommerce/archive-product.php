@@ -1,5 +1,7 @@
 <?php
-get_header( 'shop' ); ?>
+get_header( 'shop' );
+$isPopular = get_page_template_slug() == 'woocommerce/hot-products.php';
+?>
 
 <?php get_sidebar() ?>
     <main class="content col-lg-8 col-xl-9">
@@ -9,9 +11,9 @@ get_header( 'shop' ); ?>
 				<?php woocommerce_breadcrumb(); ?>
             </div>
             <div class="right">
-                <a href=""><i class="fas fa-check-circle"></i>Как заказать</a>
-                <a href=""><i class="fas fa-credit-card"></i>Как оплатить</a>
-                <a href=""><i class="fas fa-cube"></i>Как получить</a>
+                <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-check-circle"></i>Как заказать</a>
+                <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-credit-card"></i>Как оплатить</a>
+                <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-cube"></i>Как получить</a>
             </div>
         </div>
         <div class="catalog-control">
@@ -22,13 +24,20 @@ get_header( 'shop' ); ?>
             </p>
             <div class="woocommerce-ordering">
 				<?
+				if ( isset( $_GET[ current( array_keys( $_GET ) ) ] ) && empty( $_GET[ current( array_keys( $_GET ) ) ] ) ) {
+					unset( $_GET[ current( array_keys( $_GET ) ) ] );
+				}
+				if ( isset( $_GET['shop/'] ) ) {
+					unset( $_GET['shop/'] );
+				}
+				//pre( $_GET );
 				unset( $_GET['add-to-cart'] );
 				unset( $_GET['variation_id'] );
 				global $page_cat;
 				global $paged;
 				$cat     = get_queried_object();
 				$slug    = '';
-				$baseUrl = '/shop/';
+				$baseUrl = $isPopular ? '/' . get_post( 6199 )->post_name . '/' : '/shop/';
 				if ( is_product_category() ) {
 					$slug    = get_queried_object()->slug;
 					$baseUrl = "/shop/$slug/";
@@ -61,7 +70,8 @@ get_header( 'shop' ); ?>
 						$_GET['filters']['orderby'] = $key;
 						$filters                    = '?' . http_build_query( $_GET );
 						?>
-                        <li><a href="<?= $baseUrl . $paged > 1 ? "page/$paged/" : '' . $filters ?>"><?= $val ?></a></li>
+                        <li><a href="<?= $baseUrl ./* $paged > 1 ? "page/$paged/" : '' .*/
+						                 $filters ?>"><?= $val ?></a></li>
 					<? endforeach;
 					$_GET['filters']['orderby'] = $orderby_copy;
 					if ( ! $orderbyWas ) {
@@ -83,19 +93,22 @@ get_header( 'shop' ); ?>
 				$filters                  = '?' . http_build_query( $_GET );
 
 				?>
-                <a href="<?= $baseUrl . $paged > 1 ? "page/$paged/" : '' . $filters ?>"
+                <a href="<?= $baseUrl . /*$paged > 1 ? "page/$paged/" : '' .*/
+				             $filters ?>"
                    class="btn-pink round <?= $limit_copy == 15 ? 'active' : '' ?>">15</a>
 				<?
 				$_GET['filters']['limit'] = 30;
 				$filters                  = '?' . http_build_query( $_GET );
 				?>
-                <a href="<?= $baseUrl . $paged > 1 ? "page/$paged/" : '' . $filters ?>"
+                <a href="<?= $baseUrl . /*$paged > 1 ? "page/$paged/" : '' .*/
+				             $filters ?>"
                    class="btn-pink round <?= $limit_copy == 30 ? 'active' : '' ?>">30</a>
 				<?
 				$_GET['filters']['limit'] = 45;
 				$filters                  = '?' . http_build_query( $_GET );
 				?>
-                <a href="<?= $baseUrl . $paged > 1 ? "page/$paged/" : '' . $filters ?>"
+                <a href="<?= $baseUrl . /*$paged > 1 ? "page/$paged/" : '' .*/
+				             $filters ?>"
                    class="btn-pink round <?= $limit_copy == 45 ? 'active' : '' ?>">45</a>
 				<?
 				$_GET['filters']['limit'] = $limit_copy;
@@ -106,9 +119,42 @@ get_header( 'shop' ); ?>
             </div>
         </div>
 		<?
+		if ( ! is_shop() ): ?>
+			<? if ( $isPopular ): ?>
+                <h1 class="title-big"><? the_title() ?></h1>
+                <p class="cat-about"><?= apply_filters( 'the_content', get_post_field( 'post_content', $id ) ); ?></p>
+			<? else: ?>
+                <h1 class="title-big"><? echo get_queried_object()->name ?></h1>
+                <p class="cat-about"><?= $cat->description ?></p>
+			<? endif;
+		endif; ?>
+		<?
 		if ( is_product_category() ):
-			if ( get_field( 'есть-коллекции', $cat ) ):
-				$collections = get_term_children( $cat->term_id, 'product_cat' );
+			if ( get_field( 'новинки', $cat ) ): ?>
+                <section class="latest">
+                    <div class="latest-list d-flex flex-wrap align-items-stretch align-items-lg-center justify-content-end border-pink">
+                        <div class="hot col-xl-4 col-sm-6 col-12 ">
+                            <h3 class="title-big">Новинки</h3>
+                            <p class="paragraph"><? the_field( 'новинки', wc_get_page_id( 'shop' ) ) ?></p>
+                            <a href="https://vk.com/naillsshop" target="_blank" class="btn-pink light"><i
+                                        class="fas fa-arrow-right"></i>Подписаться</a>
+                        </div>
+						<? $latest = get_field( 'новинки', $cat );
+						foreach ( $latest as $last ) {
+							$_product = wc_get_product( $last ); ?>
+                            <div class="col-xl-4 col-sm-6">
+								<?
+								require get_template_directory() . '/template-parts/product-card.php'; ?>
+                            </div>
+							<?
+						}
+						?>
+                    </div>
+                </section>
+			<? endif;
+			if ( ! get_field( 'включить-каталог', $cat ) && get_field( 'есть-коллекции', $cat ) ):
+				//$collections = get_term_children( $cat->term_id, 'product_cat' );
+				$collections = get_terms( 'product_cat', [ 'parent' => $cat->term_id, 'hide_empty' => false ] );
 				?>
                 <section class="collection">
                     <h2 class="title-big">Коллекции</h2>
@@ -117,29 +163,13 @@ get_header( 'shop' ); ?>
                     </div>
                 </section>
 			<? endif; ?>
-			<? if ( get_field( 'новинки', $cat ) ): ?>
-            <section class="latest">
-                <h2 class="title-big"><? woocommerce_page_title() ?></h2>
-                <div class="latest-list d-flex flex-wrap align-items-stretch align-items-lg-center justify-content-center border-pink">
-                    <div class="hot col-xl-4 col-8">
-                        <h3 class="title-big">Новинки</h3>
-                        <p class="paragraph"><? the_field( 'новинки', wc_get_page_id( 'shop' ) ) ?></p>
-                        <a href="1" class="btn-pink light"><i class="fas fa-arrow-right"></i>Подписаться</a>
-                    </div>
-					<? $latest = get_field( 'новинки', $cat );
-					foreach ( $latest as $last ) {
-						$_product = wc_get_product( $last );
-						require get_template_directory() . '/template-parts/product-card.php';
-					}
-					?>
-                </div>
-            </section>
-		<? endif; ?>
 		<? endif; ?>
 		<?
-		if ( is_shop() || $cat->taxonomy == 'pwb-brand' || get_field( 'включить-каталог', $cat ) ): ?>
-            <section class="products">
-                <h1 class="title-big"><?= ! get_field( 'есть-коллекции', $cat ) ? woocommerce_page_title() : 'Каталог' ?></h1>
+		if ( is_shop() || $cat->taxonomy == 'pwb-brand' || get_field( 'включить-каталог', $cat ) || $isPopular ): ?>
+            <section class="products" style="<?= is_shop() ? 'padding-top:0' : '' ?>">
+				<? if ( is_shop() ): ?>
+                    <h1 class="title-big">Товары</h1>
+				<? endif; ?>
                 <div class="d-flex flex-wrap">
 					<?
 					$per_page = 15;
@@ -147,7 +177,7 @@ get_header( 'shop' ); ?>
 					$params   = [
 						'post_type'   => 'product',
 						'post_status' => 'publish',
-						'paged'       => $paged,
+						'paged'       => $paged
 					];
 					if ( isset( $_GET['filters']['limit'] ) ) {
 						$per_page = $_GET['filters']['limit'];
@@ -179,6 +209,9 @@ get_header( 'shop' ); ?>
 								'ID'             => 'ASC',
 							];
 							break;
+						default:
+							$params['orderby'] = 'menu_order title';
+							$params['order']   = 'ASC';
 					}
 					if ( is_product_category() ) {
 						$params['tax_query'] = [
@@ -200,6 +233,22 @@ get_header( 'shop' ); ?>
 							]
 						];
 					}
+					if ( $isPopular ) {
+						$params['meta_query'] = [
+							'relation' => 'OR',
+							[
+								'key'     => '_sale_price',
+								'value'   => 0,
+								'compare' => '>',
+								'type'    => 'numeric'
+							],
+							[
+								'key'     => 'новинка',
+								'value'   => 1,
+								'compare' => '=',
+							]
+						];
+					}
 					$wc_query = new WP_Query( $params );
 					if ( $wc_query->have_posts() ) :
 						while ( $wc_query->have_posts() ) :
@@ -218,11 +267,12 @@ get_header( 'shop' ); ?>
                                     <a href="<?= $_product->get_permalink() ?>"
                                        class="title"><?= $_product->get_title() ?></a>
                                     <div class="bottom">
-                                        <p class="price"><?= $price ?> ₽</p>
+                                        <p class="price"><?= $price ? $price . ' ₽' : '' ?></p>
                                     </div>
                                 </div>
                                 <div class="buy">
-									<? if ( $_product->get_type() == 'variable' ): $palette = $_product->get_available_variations();
+									<? if ( $variable ):
+										/*$palette = $_product->get_available_variations();
 										$default = $_product->get_variation_default_attribute( 'Палитра' );
 										$variationId = null;
 										foreach ( $palette as $item ) {
@@ -235,17 +285,20 @@ get_header( 'shop' ); ?>
 										if ( ! empty( $_GET['filters'] ) ) {
 											$addToCart = '?' . http_build_query( $_GET ) . '&';
 										}
-										$addToCart .= 'add-to-cart=' . $_product->get_id() . '&variation_id=' . $variationId;
+										$addToCart .= 'add-to-cart=' . $_product->get_id() . '&variation_id=' . $variationId;*/
 										?>
-                                        <a href="<?= $addToCart ?>" class="add-to-cart btn-pink"><i
-                                                    class="fas fa-shopping-cart"></i> в корзину</a>
+                                        <!--<a href="<? //= $addToCart
+										?>" class="add-to-cart btn-pink"><i
+                                                    class="fas fa-shopping-cart"></i> в корзину</a>-->
 									<? else : ?>
-                                        <a href="<?= $_product->add_to_cart_url() ?>" class="add-to-cart btn-pink"><i
+                                        <a href="<?= $_product->add_to_cart_url() ?>" class="add-to-cart btn-pink"
+                                           onclick="yaCounter48380480.reachGoal('v_korzinu'); return true;"><i
                                                     class="fas fa-shopping-cart"></i> в корзину</a>
 									<? endif; ?>
 									<?
 									$product = $_product;
-									echo do_shortcode( '[ti_wishlists_addtowishlist]' ) ?>
+									if ( ! $variable )
+										echo do_shortcode( '[ti_wishlists_addtowishlist]' ) ?>
                                 </div>
                             </div>
 						<? endwhile;
@@ -315,8 +368,16 @@ get_header( 'shop' ); ?>
                 <!--pagination-->
             </section>
 		<? endif; ?>
-        <div class="seo-text">
-            <p class="paragraph"><?= apply_filters( 'the_content', get_post_field( 'post_content', wc_get_page_id( 'shop' ) ) ); ?></p>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<?
+			if ( $isPopular ) {
+				echo apply_filters( 'the_content', get_field( 'Сео-контент' ) );
+			} else {
+				$term = get_term( get_queried_object()->term_id );
+				$seo  = get_field( 'Сео-контент', $term );
+				echo $seo ? $seo : apply_filters( 'the_content', get_post_field( 'post_content', wc_get_page_id( 'shop' ) ) );
+			} ?>
         </div>
         <div class="after-advantages">
             <div class="advantage-item delivery min">

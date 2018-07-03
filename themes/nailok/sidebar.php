@@ -113,30 +113,9 @@
     </ul>
 	<? if ( ! is_front_page() ): ?>
         <div class="side-advantages">
-            <? $item = get_field( 'преимущество-доставка','option' ) ?>
-            <a href="<?= $item['ccылка'] ?>" class="advantage-item delivery min">
-                <div class="text">
-                    <div class="title"><?= $item['заголовок'] ?></div>
-                    <p><?= $item['текст'] ?></p>
-                </div>
-                <img src="<? path() ?>img/delivery-item.png" alt="">
-            </a>
-            <? $item = get_field( 'преимущество-сервис','option' ) ?>
-            <a href="<?= $item['ccылка'] ?>" class="advantage-item service-second min">
-                <div class="text">
-                    <div class="title"><?= $item['заголовок'] ?></div>
-                    <p><?= $item['текст'] ?></p>
-                </div>
-                <img src="<? path() ?>img/service-item-2.png" alt="">
-            </a>
-            <? $item = get_field( 'преимущество-учёба','option' ) ?>
-            <a href="<?= $item['ccылка'] ?>" class="advantage-item study min">
-                <div class="text">
-                    <div class="title"><?= $item['заголовок'] ?></div>
-                    <p><?= $item['текст'] ?></p>
-                </div>
-                <img src="<? path() ?>img/study-item.png" alt="">
-            </a>
+            <? get_template_part( 'template-parts/advantage-delivery-min' ); ?>
+	        <? get_template_part( 'template-parts/advantage-service-min' ); ?>
+            <? get_template_part( 'template-parts/advantage-study-min' ); ?>
         </div>
 	<? endif; ?>
 </aside>

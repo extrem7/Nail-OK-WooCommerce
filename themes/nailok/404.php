@@ -4,7 +4,7 @@
         <p class="error-text">
             К сожалению, такой страницы
             на сайте пока нет, попробуйте
-            <a href="">вернутся на главную</a> или
+            <a href="/">вернутся на главную</a> или
             воспользуйтесь поиском
         </p>
         <form role="search" method="get" class="search-form search" action="<?php echo home_url( '/' ); ?>">

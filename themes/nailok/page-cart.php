@@ -9,9 +9,9 @@ get_header(); ?>
 			<?php woocommerce_breadcrumb(); ?>
 		</div>
 		<div class="right">
-			<a href=""><i class="fas fa-check-circle"></i>Как заказать</a>
-			<a href=""><i class="fas fa-credit-card"></i>Как оплатить</a>
-			<a href=""><i class="fas fa-cube"></i>Как получить</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-check-circle"></i>Как заказать</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-credit-card"></i>Как оплатить</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-cube"></i>Как получить</a>
 		</div>
 	</div>
 	<section class="cart-section">

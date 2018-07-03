@@ -60,9 +60,9 @@ get_header(); ?>
                         <div class="carousel-item <?= $status ? 'active' : '' ?>"
                              style="background-image: url('<?= $image['url'] ?>')">
                             <div class="wrap">
-                                <div class="title">
+                                <a href="<?= $product->get_permalink() ?>" class="title">
                                     <mark><?= $product->get_title() ?></mark>
-                                </div>
+                                </a>
                                 <div class="buy">
                                     <a href="<?= $product->add_to_cart_url() ?>" class="add-to-cart btn-pink"><i
                                                 class="fas fa-shopping-cart"></i>в
@@ -96,7 +96,8 @@ get_header(); ?>
         <div class="hot">
             <h3 class="title-big"><? the_field( 'горячие-заголовок' ) ?></h3>
             <p class="paragraph"><? the_field( 'горячие-текст' ) ?></p>
-            <a href="/shop" class="btn-pink light"><i class="fas fa-arrow-right"></i>Посмотреть все</a>
+            <a href="<?= get_permalink( 6199 ) ?>" class="btn-pink light"><i class="fas fa-arrow-right"></i>Посмотреть
+                все</a>
         </div>
 		<?
 		$products = get_field( 'горячие' );
@@ -131,12 +132,15 @@ get_header(); ?>
 				<?
 				$status = true;
 				$li     = 0;
-				while ( have_rows( 'слайдер-бренды' ) ) : the_row() ?>
-                    <li data-target="#brands" data-slide-to="<?= $li ?>" class="<?= $status ? 'active' : '' ?>"></li>
-					<?
-					$status = false;
-					$li ++;
-				endwhile; ?>
+				if ( count( get_field( 'слайдер-бренды' ) ) > 1 ):
+					while ( have_rows( 'слайдер-бренды' ) ) : the_row() ?>
+                        <li data-target="#brands" data-slide-to="<?= $li ?>"
+                            class="<?= $status ? 'active' : '' ?>"></li>
+						<?
+						$status = false;
+						$li ++;
+					endwhile;
+				endif; ?>
             </ol>
         </div>
         <div id="brands-mobile" data-interval="2000" class="carousel slide d-block d-md-none" data-ride="carousel">
@@ -156,7 +160,7 @@ get_header(); ?>
 				$status = true;
 				$li     = 0;
 				while ( have_rows( 'слайдер-бренды-мобильный' ) ) : the_row() ?>
-                    <li data-target="#brands" data-slide-to="<?= $li ?>" class="<?= $status ? 'active' : '' ?>"></li>
+                    <li data-target="#brands-mobile" data-slide-to="<?= $li ?>" class="<?= $status ? 'active' : '' ?>"></li>
 					<?
 					$status = false;
 					$li ++;
@@ -167,26 +171,26 @@ get_header(); ?>
     <section class="benefits">
 		<? $benefits = get_field( 'преимущества' ) ?>
         <div class="row justify-content-around">
-            <div class="item active col-xl-4 col-md-6">
+            <a href="<? the_permalink( 448 ) ?>" class="item active col-xl-4 col-md-6">
                 <i class="far fa-thumbs-up"></i>
                 <p class="title-big"><?= $benefits['блок-1-заголовок'] ?></p>
                 <p class="paragraph"><?= $benefits['блок-1-текст'] ?></p>
-            </div>
-            <div class="item col-xl-4 col-md-6">
+            </a>
+            <a href="<? the_permalink( 775 ) ?>" class="item col-xl-4 col-md-6">
                 <i class="fas fa-graduation-cap"></i>
                 <p class="title-big"><?= $benefits['блок-2-заголовок'] ?></p>
                 <p class="paragraph"><?= $benefits['блок-2-текст'] ?></p>
-            </div>
-            <div class="item col-xl-4 col-md-6">
+            </a>
+            <a href="<? the_permalink( 282 ) ?>" class="item col-xl-4 col-md-6">
                 <i class="far fa-dot-circle"></i>
                 <p class="title-big"><?= $benefits['блок-3-заголовок'] ?></p>
                 <p class="paragraph"><?= $benefits['блок-3-текст'] ?></p>
-            </div>
+            </a>
         </div>
-        <hr class="d-none d-md-block">
-        <p class="paragraph d-none d-md-block">
-			<? the_field( 'сео-текст' ) ?>
-        </p>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<? the_field( 'Сео-контент' ) ?>
+        </div>
     </section>
 </main>
 

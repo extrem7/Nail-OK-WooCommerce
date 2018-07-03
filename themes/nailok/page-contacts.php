@@ -43,28 +43,43 @@ get_header(); ?>
 				the_row() ?>
                 <div id="tab-<?= $li ?>" class="item tab-pane <?= $status ? 'active' : '' ?>">
 					<? the_sub_field( 'контент' ) ?>
+                    <div class="social d-flex">
+						<? if ( get_field( 'хедер-вк', 'option' ) ): ?>
+                            <a title="Группа вконтакте магазина Ноготок" href="<? the_field( 'хедер-вк', 'option' ) ?>"
+                               target="_blank" class="btn-pink round"><i class="fab fa-vk"></i></a>
+						<? endif; ?>
+						<? if ( $li == 0 ): ?>
+                            <a title="Группа вконтакте учебного центра Ноготок" href="https://vk.com/schoolnogotok"
+                               target="_blank" class="btn-pink round"><i class="fab fa-vk"></i></a>
+						<? endif; ?>
+						<? if ( get_field( 'хедер-инстаграм', 'option' ) ): ?>
+                            <a title="Instagram Ноготок" href="<? the_field( 'хедер-инстаграм', 'option' ) ?>"
+                               target="_blank" class="btn-pink round"><i class="fab fa-instagram"></i></a>
+						<? endif; ?>
+                    </div>
+                    <div class="map d-none"><? the_sub_field( 'карта' ) ?></div>
+                    <p class="map-title d-none"><? the_sub_field( 'карта-заголовок' ) ?></p>
                 </div>
 				<?
 				$status = false;
 				$li ++;
 			endwhile; ?>
-            <div class="social d-flex">
-				<? if ( get_field( 'хедер-вк', 'option' ) ): ?>
-                    <a href="<? the_field( 'хедер-вк', 'option' ) ?>" class="btn-pink round"><i
-                                class="fab fa-vk"></i></a>
-				<? endif; ?>
-				<? if ( get_field( 'хедер-инстаграм', 'option' ) ): ?>
-                    <a href="<? the_field( 'хедер-инстаграм', 'option' ) ?>" class="btn-pink round"><i
-                                class="fab fa-instagram"></i></a>
-				<? endif; ?>
-            </div>
         </div>
     </div>
     <div class="banner-address">
+		<?
+		$map = get_field( 'точки-продаж' )[0];
+		?>
         <div class="info">
-            <p><? the_field( 'карта-адрес' ) ?></p>
+            <p><?= $map['карта-заголовок'] ?></p>
         </div>
-		<? the_field( 'карта' ) ?>
+        <iframe src="<?= $map['карта'] ?>" class="map" style="border:0" allowfullscreen></iframe>
     </div>
+	<? if ( get_field( 'Сео-контент' ) ): ?>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block">
+			<? the_field( 'Сео-контент' ) ?>
+        </div>
+	<? endif; ?>
 </main>
 <?php get_footer(); ?>

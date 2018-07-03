@@ -41,7 +41,10 @@ var header = {
                 setTimeout(function () {
                     jQuery('#thanks').modal('hide');
                 }, 5000);
+                yaCounter48380480.reachGoal('centr');
+                return true;
             });
+            jQuery(".wpcf7-tel").inputmask("+7(999)999-99-99");
         },
         catalogPage: function catalogPage() {
             jQuery('.control .btn-pink').click(function () {
@@ -58,14 +61,29 @@ var header = {
     },
     variableProduct = {
         update: function update() {
+            var src = jQuery('.palette input:checked ').next('').css('background-image');
+            src = src.replace('url(', '').replace(')', '').replace(/\"/gi, "");
+            if (jQuery('.album .photo-big').attr('src') !== src) {
+                jQuery('.small .active').removeClass('active');
+                jQuery('.album .photo-big').fadeOut(200, function () {
+                    jQuery(this).attr('src', src).fadeIn(200);
+                });
+            }
+
+            var top = $('.before-content').offset().top + 100;
+            $('body,html').animate({scrollTop: top}, Math.abs(top - $(document).scrollTop()) / 2);
+
             var variation = jQuery('.palette input:checked').parent().attr('data-variation-id');
             var id = jQuery('.product').attr('data-id');
             var quantity = jQuery('.quantity input').val();
-
+            var name = jQuery('.palette input:checked').parent().find('.popover').text();
             var link = location.href + '?add-to-cart=' + id + '&variation_id=' + variation + '&quantity=' + quantity;
 
             jQuery('.product .add-to-cart').attr('href', link);
-            console.log(link);
+            jQuery('.choice').fadeOut(function () {
+                jQuery(this).text(`Вами выбран: ${name}. Добавьте его в корзину`);
+                jQuery(this).fadeIn();
+            })
         },
         controller: function controller() {
             var _this = this;
@@ -87,9 +105,12 @@ var header = {
             jQuery('#delivery').change(function () {
                 if (!_this2.status) {
                     jQuery('#billing_company').removeAttr('disabled');
+                    jQuery('.address-details input,#billing_address_1, #billing_city').attr('disabled', 'disabled');
                     _this2.status = true;
                 } else {
                     jQuery('#billing_company').attr('disabled', 'disabled');
+                    jQuery('.address-details input,#billing_address_1, #billing_city').removeAttr('disabled');
+                    _this2.status = false;
                 }
             });
         }
@@ -99,7 +120,7 @@ function addCart() {
     if (addToCart) {
         if (jQuery('body').hasClass('home-page')) {
             var top = jQuery('.products').offset().top;
-            jQuery('body,html').animate({ scrollTop: top }, 1500);
+            jQuery('body,html').animate({scrollTop: top}, 1500);
         }
         /*jQuery('#thanks-product').modal('show');
         setTimeout(function () {
@@ -166,6 +187,27 @@ function promotion() {
     });
 }
 
+function contactsMap() {
+    $('.list a').on('shown.bs.tab', function (event) {
+        let id = $(this).attr('href'),
+            map = $.trim($(`${id} .map`).text()),
+            title = $.trim($(`${id} .map-title`).html());
+        if (map) {
+            $('.banner-address .info p').fadeOut(function () {
+                $(this).html(title);
+            });
+            $('.banner-address iframe').animate({opacity: 0}, function () {
+                $(this).attr('src', map);
+                setTimeout(() => {
+                    $(this).animate({opacity: 1}, function () {
+                        $(this).parent().find('.info p').fadeIn()
+                    });
+                }, 1000);
+            });
+        }
+    });
+}
+
 function ajaxNews() {
     jQuery('.content .more').click(function (e) {
         e.preventDefault();
@@ -175,9 +217,9 @@ function ajaxNews() {
             url: "/ajax.php",
             data: data,
             success: function success(result) {
-                jQuery(".content .row").animate({ opacity: 0 }, 500, function () {
+                jQuery(".content .row").animate({opacity: 0}, 500, function () {
                     jQuery(".content .row").html(result);
-                    jQuery(".content .row").animate({ opacity: 1 }, 500);
+                    jQuery(".content .row").animate({opacity: 1}, 500);
                 });
             }
         });
@@ -233,6 +275,21 @@ jQuery(window).on("load", function () {
     if (bodyClass('cart-page')) {
         productCounter();
         delivery.controller();
+        jQuery("#billing_phone").inputmask("+7(999)999-99-99");
+        jQuery('.checkout-section .button').click(function (e) {
+            let response = grecaptcha.getResponse();
+            if (response.length === 0) e.preventDefault();
+        });
+        $(document.body).on('checkout_error', function () {
+            $('strong:contains(Оплата)').filter(function () {
+                return $(this).children().length === 0;  // exclude divs with children
+            }).text(function (index, text) {
+                return text.replace(/Оплата/g, '');
+            });
+        });
+    }
+    if (bodyClass('catalog-page')) {
+        catalogView();
     }
     if (bodyClass('catalog-page')) {
         catalogView();
@@ -254,5 +311,8 @@ jQuery(window).on("load", function () {
             variableProduct.controller();
         }
         window.history.replaceState(null, null, window.location.pathname);
+    }
+    if (bodyClass('contacts-page')) {
+        contactsMap();
     }
 });

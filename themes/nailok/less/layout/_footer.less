@@ -113,6 +113,7 @@
 
 @media (max-width: 768px) {
   .footer {
+    padding-bottom: 0;
     .row {
       & > div {
         .fit-content();
@@ -127,10 +128,20 @@
       }
     }
     .menu {
-      font-size: 24px;
+      font-size: 20px;
     }
     .bottom {
-      font-size: 24px;
+      font-size: 18px;
+      font-weight: 500;
+      background-color: #19191a;
+      margin: 25px -15px 0;
+      padding: 15px 15px 25px;
+      a:last-child{
+        display: block;
+      }
+    }
+    .copyright {
+      margin-bottom: 15px;
     }
   }
 }

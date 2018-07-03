@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<strong><?php echo $order->get_formatted_order_total(); ?></strong>
 				</li>
 
-				<?php if ( $order->get_payment_method_title() ) : ?>
+				<?php if ( false/*$order->get_payment_method_title()*/ ) : ?>
 					<li class="woocommerce-order-overview__payment-method method">
 						<?php _e( 'Payment method:', 'woocommerce' ); ?>
 						<strong><?php echo wp_kses_post( $order->get_payment_method_title() ); ?></strong>

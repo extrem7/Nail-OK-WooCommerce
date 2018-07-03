@@ -6,9 +6,9 @@ get_header( 'shop' ); ?>
     <div class="before-content">
 		<?php woocommerce_breadcrumb(); ?>
         <div class="right">
-            <a href=""><i class="fas fa-check-circle"></i>Как заказать</a>
-            <a href=""><i class="fas fa-credit-card"></i>Как оплатить</a>
-            <a href=""><i class="fas fa-cube"></i>Как получить</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-check-circle"></i>Как заказать</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-credit-card"></i>Как оплатить</a>
+            <a href="<?= get_permalink( 427 ) ?>"><i class="fas fa-cube"></i>Как получить</a>
         </div>
     </div>
 	<?
@@ -35,7 +35,16 @@ get_header( 'shop' ); ?>
 						$gallery   = $product->get_gallery_image_ids();
 						$photo_url = '';
 						$photo_alt = '';
-						if ( ! empty( $gallery ) ) {
+						if ( $productType == 'variable' ) {
+							foreach ( $palette as $item ) {
+								$attr = array_shift( $item['attributes'] );
+								if ( $default == $attr ) {
+									$photo_url = $item['image']['url'];
+									$photo_alt = $item['image']['alt'];
+									break;
+								}
+							}
+						} else if ( ! empty( $gallery ) ) {
 							$photo_url = wp_get_attachment_url( $gallery[0] );
 							$photo_alt = get_post_meta( $gallery[0], '_wp_attachment_image_alt', true );
 						} else {
@@ -45,7 +54,7 @@ get_header( 'shop' ); ?>
 						}
 						?>
                         <img src="<?= $photo_url ?>" alt="<?= $photo_alt ?>" class="photo-big">
-						<? if ( count( $gallery != 1 ) ): ?>
+						<? if ( count( $gallery ) != 1 ): ?>
                             <div class="small">
 								<?
 								$status        = true;
@@ -163,7 +172,9 @@ get_header( 'shop' ); ?>
                                 <button class="plus"><i class="fas fa-plus"></i></button>
                             </div>
 						<? endif; ?>
-                        <a href="<?= $addToCart ?>" class="add-to-cart btn-pink"><i class="fas fa-shopping-cart"></i>В
+                        <a href="<?= $addToCart ?>" class="add-to-cart btn-pink"
+                           onclick="yaCounter48380480.reachGoal('v_korzinu'); return true;"><i
+                                    class="fas fa-shopping-cart"></i>В
                             корзину</a>
 					<? elseif ( $productType == 'simple' ): ?>
                         <form class="cart" method="post" enctype="multipart/form-data">
@@ -197,7 +208,8 @@ get_header( 'shop' ); ?>
                                     </div>
 								<? endif; ?>
                                 <button type="submit"
-                                        class="single_add_to_cart_button add-to-cart btn-pink button alt"><i
+                                        class="single_add_to_cart_button add-to-cart btn-pink button alt"
+                                        onclick="yaCounter48380480.reachGoal('v_korzinu'); return true;"><i
                                             class="fas fa-shopping-cart"></i> <?php echo esc_html( $product->single_add_to_cart_text() ); ?>
                                 </button>
                                 <input type="hidden" name="add-to-cart"
@@ -211,9 +223,10 @@ get_header( 'shop' ); ?>
 				<? endif; ?>
             </div>
         </div>
-		<? if ( $productType == 'variable' && count( $palette ) <= 20 ): ?>
+		<? if ( $productType == 'variable' && count( $palette ) > 0 && count( $palette ) <= 20 ): ?>
             <div class="col-12">
                 <h3 class="title-big">Палитра</h3>
+                <p class="choice paragraph"></p>
             </div>
             <div class="d-flex align-items-center flex-wrap">
                 <div class="palette col-xl-5">
@@ -231,15 +244,17 @@ get_header( 'shop' ); ?>
 						<? endforeach; ?>
                     </div>
                 </div>
-                <div class="col-xl-7 d-flex justify-content-center">
+                <div class="col-xl-7 d-flex justify-content-end">
 					<? get_template_part( 'template-parts/advantage-delivery' ) ?>
                 </div>
             </div>
             <div class="d-flex flex-wrap">
-                <div class="col-xl-6">
-                    <h4 class="title-big">Описание</h4>
-                    <p class="paragraph"><?= $product->get_description() ?></p>
-                </div>
+				<? if ( $product->get_description() ): ?>
+                    <div class="col-xl-6">
+                        <h4 class="title-big">Описание</h4>
+                        <div class="paragraph"><?= $product->get_description() ?></div>
+                    </div>
+				<? endif; ?>
 				<? if ( get_field( 'состав' ) ): ?>
                     <div class="col-xl-6">
                         <h4 class="title-big">Состав</h4>
@@ -248,8 +263,9 @@ get_header( 'shop' ); ?>
 				<? endif; ?>
             </div>
 		<? else: ?>
-			<? if ( $productType == 'variable' ): ?>
+			<? if ( $productType == 'variable' && count( $palette ) > 0 ): ?>
                 <h3 class="title-big">Палитра</h3>
+                <p class="choice paragraph"></p>
                 <div class="palette">
                     <div class="list d-flex flex-wrap">
 						<? foreach ( $palette as $item ):
@@ -268,36 +284,61 @@ get_header( 'shop' ); ?>
 			<? endif; ?>
             <div class="d-flex align-items-center flex-wrap">
                 <div class="col-xl-5">
-                    <h4 class="title-big">Описание</h4>
-                    <p class="paragraph"><?= $product->get_description() ?></p>
+					<? if ( $product->get_description() ): ?>
+                        <h4 class="title-big">Описание</h4>
+                        <div class="paragraph"><?= $product->get_description() ?></div>
+					<? endif; ?>
                 </div>
-                <div class="col-xl-7 d-flex justify-content-center">
+                <div class="col-xl-7 d-flex justify-content-end">
 					<? get_template_part( 'template-parts/advantage-delivery' ) ?>
                 </div>
             </div>
 			<? if ( get_field( 'состав' ) ): ?>
                 <div class="col-12">
                     <h4 class="title-big">Состав</h4>
-                    <p class="paragraph"><? the_field( 'состав' ) ?></p>
+                    <div class="paragraph"><? the_field( 'состав' ) ?></div>
                 </div>
 			<? endif; ?>
 		<? endif; ?>
     </section>
 	<?
-	$cat = get_term( 25 );
-	if ( get_field( 'есть-коллекции', $cat ) ):
-		$collections = get_term_children( $cat->term_id, 'product_cat' );
-		?>
+	$upSells = $product->get_upsell_ids();
+	if ( $upSells ):?>
         <section class="collection">
-            <h2 class="title-big">Коллекции</h2>
-            <div class="collections row">
-				<? require_once get_template_directory() . '/template-parts/collection-loop.php' ?>
+            <h2 class="title-big">Рекомендуем также</h2>
+            <div class="d-flex flex-wrap">
+				<?
+				foreach ( $upSells as $product ):
+					$_product = wc_get_product( $product ); ?>
+                    <div class="col-lg-4">
+						<? require get_template_directory() . '/template-parts/product-card.php'; ?>
+                    </div>
+				<? endforeach; ?>
             </div>
         </section>
 	<? endif; ?>
-	<? if ( get_field( 'сео-текст' ) ): ?>
-        <div class="seo-text">
-            <p class="paragraph d-none d-md-block"><? the_field( 'сео-текст' ) ?></p>
+	<?
+	$terms = get_the_terms( $id, 'product_cat' );
+	if ( count( $terms ) > 1 ) {
+		$cat    = end( $terms );
+		$parent = get_term( $cat->parent, 'product_cat' );
+		if ( get_field( 'есть-коллекции', $parent ) ):
+			$collections = get_term_children( $parent->term_id, 'product_cat' );
+			unset( $collections[ array_search( $cat->term_id, $collections ) ] );
+			if ( ! empty( $collections ) ):
+				?>
+                <section class="collection">
+                    <h2 class="title-big">Коллекции</h2>
+                    <div class="collections row">
+						<? require_once get_template_directory() . '/template-parts/collection-loop.php' ?>
+                    </div>
+                </section>
+			<? endif;
+		endif;
+	} ?>
+	<? if ( get_field( 'Сео-контент' ) ): ?>
+        <div class="paragraph seo-content d-none d-md-block">
+            <hr class="d-none d-md-block"><? the_field( 'Сео-контент' ) ?>
         </div>
 	<? endif; ?>
 </main>

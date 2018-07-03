@@ -2,7 +2,8 @@
 //wp setup
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'menus' );
-show_admin_bar( false );
+
+//show_admin_bar( false );
 function remove_menus() {
 
 	//remove_menu_page( 'index.php' );                  //Dashboard
@@ -13,11 +14,25 @@ function remove_menus() {
 	remove_menu_page( 'edit-comments.php' );          //Comments
 	//remove_menu_page( 'themes.php' );                 //Appearance
 	//remove_menu_page( 'plugins.php' );                //Plugins
-	remove_menu_page( 'users.php' );                  //Users
+	//remove_menu_page( 'users.php' );                  //Users
 	//remove_menu_page( 'tools.php' );                  //Tools
 	//remove_menu_page( 'options-general.php' );        //Settings
 
 }
+
+if ( isset( $_GET['s'] ) && $_GET['s'] == '' && ! is_admin() ) {
+	wp_redirect( site_url() );
+	exit;
+}
+if ( ! function_exists( 'post_count_on_archive' ) ):
+	function post_count_on_archive( $query ) {
+		if ( $query->is_search() ) {
+			$query->set( 'posts_per_page', '100' ); /*set this your preferred count*/
+		}
+	}
+
+	add_action( 'pre_get_posts', 'post_count_on_archive' );
+endif;
 
 add_action( 'admin_menu', 'remove_menus' );
 
@@ -49,7 +64,7 @@ function custom_wc_checkout_fields( $fields ) {
 	//unset( $fields['billing']['billing_company'] );
 	//unset( $fields['billing']['billing_postcode'] );
 	//unset( $fields['billing']['billing_state'] );
-	unset( $fields['billing']['billing_email'] );
+	//unset( $fields['billing']['billing_email'] );
 	//unset($fields['billing']['billing_country']);
 	//unset($fields['billing']['billing_address_2']);
 	//unset($fields['billing']['billing_state']);
@@ -138,6 +153,12 @@ function registerThemeJs() {
 	wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js' );
 	wp_enqueue_script( 'jquery' );
+	wp_register_script( 'jquery.inputmask', get_template_directory_uri() . '/js/jquery.inputmask.bundle.min.js' );
+	wp_enqueue_script( 'jquery.inputmask' );
+	if ( is_cart() ) {
+		wp_register_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
+		wp_enqueue_script( 'recaptcha' );
+	}
 	wp_register_script( 'main', get_template_directory_uri() . '/js/main.js' );
 	wp_enqueue_script( 'main' );
 }
@@ -164,7 +185,44 @@ function pre( $array ) {
 	echo "</pre>";
 }
 
+function get_term_top_most_parent( $term_id, $taxonomy ) {
+	// start from the current term
+	$parent = get_term_by( 'id', $term_id, $taxonomy );
+	// climb up the hierarchy until we reach a term with parent = '0'
+	while ( $parent->parent != '0' ) {
+		$term_id = $parent->parent;
+
+		$parent = get_term_by( 'id', $term_id, $taxonomy );
+	}
+
+	return $parent;
+}
+
 function create_school() {
+	$slug = get_post( '160' )->post_name;
+	register_post_type( 'coach', array(
+		'labels'             => array(
+			'name'          => __( 'Тренеры' ),
+			'singular_name' => __( 'Тренеры' ),
+			'add_new'       => __( 'Добавить тренера' ),
+			'add_new_item'  => __( 'Добавить нового тренера' ),
+			'edit'          => __( 'Редактировать тренера' ),
+			'edit_item'     => __( 'Редактировать тренера' ),
+			'new_item'      => __( 'Новый тренер' ),
+			'all_items'     => __( 'Все тренеры' ),
+			'view'          => __( 'Посмотреть тренера' ),
+			'view_item'     => __( 'Посмотреть тренера' ),
+			'search_items'  => __( 'Искать тренера' ),
+			'not_found'     => __( 'Не найдены Тренеры' ),
+		),
+		'public'             => true,
+		'publicly_queryable' => false,
+		'menu_position'      => 6,
+		'supports'           => array( 'title', 'custom-fields' ),
+		'capability_type'    => 'post',
+		'menu_icon'          => 'dashicons-universal-access',
+		'has_archive'        => false,
+	) );
 	register_post_type( 'school', array(
 		'labels'             => array(
 			'name'          => __( 'Курсы' ),
@@ -183,10 +241,10 @@ function create_school() {
 		'public'             => true,
 		'publicly_queryable' => true,
 		'menu_position'      => 5,
-		'supports'           => array( 'title', 'thumbnail', 'custom-fields' ),
+		'supports'           => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
 		'capability_type'    => 'post',
 		'menu_icon'          => 'dashicons-welcome-learn-more',
-		'rewrite'            => array( 'slug' => 'school' ),
+		'rewrite'            => array( 'slug' => $slug ),
 		'has_archive'        => false,
 	) );
 }
@@ -216,5 +274,75 @@ if ( function_exists( 'acf_add_options_page' ) ) {
 		'menu_slug'   => 'footer'
 	) );
 }
+
+//shortcodes
+function banner( $atts ) {
+	global $banner;
+	$banner = $atts;
+	ob_start();
+	get_template_part( 'template-parts/banner-long' );
+
+	return ob_get_clean();
+}
+
+function banner_map( $atts ) {
+	ob_start();
+	get_template_part( 'template-parts/banner-address' );
+
+	return ob_get_clean();
+}
+
+function banner_certificate( $atts ) {
+	ob_start();
+	get_template_part( 'template-parts/banner-certificate' );
+
+	return ob_get_clean();
+}
+
+function banner_course( $atts ) {
+	ob_start();
+	get_template_part( 'template-parts/banner-course' );
+
+	return ob_get_clean();
+}
+
+function banner_study( $atts ) {
+	ob_start();
+	get_template_part( 'template-parts/advantage-study-min' );
+
+	return ob_get_clean();
+}
+
+function banner_delivery( $atts ) {
+	ob_start();
+	if ( ! empty( $atts ) && in_array( 'min', $atts ) ) {
+		get_template_part( 'template-parts/advantage-delivery-min' );
+	} else {
+		get_template_part( 'template-parts/advantage-delivery' );
+	}
+
+	return ob_get_clean();
+}
+
+function banner_service( $atts ) {
+	ob_start();
+	if ( ! empty( $atts ) && in_array( 'min', $atts ) ) {
+		get_template_part( 'template-parts/advantage-service-min' );
+	} else {
+		get_template_part( 'template-parts/advantage-service' );
+	}
+
+	return ob_get_clean();
+}
+
+add_shortcode( 'banner', 'banner' );
+
+add_shortcode( 'banner_map', 'banner_map' );
+add_shortcode( 'banner_certificate', 'banner_certificate' );
+add_shortcode( 'banner_study', 'banner_study' );
+add_shortcode( 'banner_course', 'banner_course' );
+add_shortcode( 'banner_delivery', 'banner_delivery' );
+add_shortcode( 'banner_service', 'banner_service' );
+
 
 require_once 'bootstrap_menu.php';
